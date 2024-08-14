@@ -30,7 +30,7 @@ void call(Map args = [:]) {
             usernamePassword(credentialsId: "jenkins-gradle-check-s3-aws-credentials", usernameVariable: 'amazon_s3_access_key', passwordVariable: 'amazon_s3_secret_key'),
             usernamePassword(credentialsId: "jenkins-gradle-check-s3-aws-resources", usernameVariable: 'amazon_s3_base_path', passwordVariable: 'amazon_s3_bucket')]) {
 
-            sh """
+            def result = sh (script:"""
                 #!/bin/bash
 
                 set -e
@@ -40,6 +40,14 @@ void call(Map args = [:]) {
                 rm -rf search
                 git clone ${git_repo_url} search
                 cd search/
+                
+                if \$((git rev-parse -q --verify \"${git_reference}^{commit}\" > /dev/null 2>&1); then
+                  echo "Commit ${git_reference} exists in head repo"
+                else
+                  echo "Commit ${git_reference} does not exist in head repo"
+                  exit 2
+                fi
+                
                 git checkout -f ${git_reference}
                 git rev-parse HEAD
 
@@ -85,7 +93,11 @@ void call(Map args = [:]) {
                     exit 1
                 fi
 
-            """
+            """, returnStatus: true)
+
+            if (result == 2) {
+                currentBuild.result = 'ABORTED'
+            }
         }
 
     }

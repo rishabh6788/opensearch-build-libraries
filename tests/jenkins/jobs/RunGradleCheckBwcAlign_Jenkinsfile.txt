@@ -9,7 +9,7 @@
                   runGradleCheck.usernamePassword({credentialsId=jenkins-gradle-check-s3-aws-credentials, usernameVariable=amazon_s3_access_key, passwordVariable=amazon_s3_secret_key})
                   runGradleCheck.usernamePassword({credentialsId=jenkins-gradle-check-s3-aws-resources, usernameVariable=amazon_s3_base_path, passwordVariable=amazon_s3_bucket})
                   runGradleCheck.withCredentials([[amazon_s3_access_key, amazon_s3_secret_key], [amazon_s3_base_path, amazon_s3_bucket]], groovy.lang.Closure)
-                     runGradleCheck.sh(
+                     runGradleCheck.sh({script=
                 #!/bin/bash
 
                 set -e
@@ -19,6 +19,14 @@
                 rm -rf search
                 git clone https://github.com/opensearch-project/OpenSearch search
                 cd search/
+                
+                if $((git rev-parse -q --verify "main^{commit}" > /dev/null 2>&1); then
+                  echo "Commit main exists in head repo"
+                else
+                  echo "Commit main does not exist in head repo"
+                  exit 2
+                fi
+                
                 git checkout -f main
                 git rev-parse HEAD
 
@@ -64,4 +72,4 @@
                     exit 1
                 fi
 
-            )
+            , returnStatus=true})

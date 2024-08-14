@@ -22,21 +22,24 @@ class RunGradleCheckLibTester extends LibFunctionTester {
         this.bwcCheckoutAlign = bwcCheckoutAlign
     }
 
+    @Override
     void configure(helper, binding) {
-        // N/A
     }
 
+    @Override
     void parameterInvariantsAssertions(call) {
         assertThat(call.args.gitRepoUrl.first(), notNullValue())
         assertThat(call.args.gitReference.first(), notNullValue())
         assertThat(call.args.bwcCheckoutAlign.first(), notNullValue())
     }
 
+    @Override
     boolean expectedParametersMatcher(call) {
         return call.args.gitRepoUrl.first().toString().equals(this.gitRepoUrl)
                 && call.args.gitReference.first().toString().equals(this.gitReference)
     }
 
+    @Override
     String libFunctionName() {
         return 'runGradleCheck'
     }

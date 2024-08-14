@@ -10,11 +10,13 @@
 import jenkins.tests.BuildPipelineTest
 import org.junit.Before
 import org.junit.Test
+import static org.junit.Assert.*
 
 import static com.lesfurets.jenkins.unit.MethodCall.callArgsToString
 import static org.hamcrest.CoreMatchers.containsString
 import static org.hamcrest.CoreMatchers.hasItem
 import static org.hamcrest.MatcherAssert.assertThat
+
 
 
 class TestRunGradleCheck extends BuildPipelineTest {
@@ -28,6 +30,7 @@ class TestRunGradleCheck extends BuildPipelineTest {
             )
         )
         super.setUp()
+        binding.setVariable('currentBuild', [result: 'SUCCESS'])
     }
 
     @Test
@@ -38,6 +41,9 @@ class TestRunGradleCheck extends BuildPipelineTest {
 
     @Test
     void testNoAlignParamInGradleCommand() {
+        helper.registerAllowedMethod("sh", [Map], { map ->
+            return 0 // Default to successful execution
+        })
         runScript("tests/jenkins/jobs/RunGradleCheck_Jenkinsfile")
 
         def gradleCommands = getCommandExecutions('sh', 'gradle').findAll {
@@ -45,6 +51,7 @@ class TestRunGradleCheck extends BuildPipelineTest {
         }
         assertThat(gradleCommands, hasItem(containsString("./gradlew clean && ./gradlew check -Dtests.coverage=true  --no-daemon --no-scan || GRADLE_CHECK_STATUS=1")
         ))
+        assertEquals('SUCCESS', binding.getVariable('currentBuild').result)
     }
 
     @Test
@@ -61,6 +68,19 @@ class TestRunGradleCheck extends BuildPipelineTest {
         }
         assertThat(gradleCommands, hasItem(containsString("./gradlew clean && ./gradlew check -Dtests.coverage=true -Dbwc.checkout.align=true --no-daemon --no-scan || GRADLE_CHECK_STATUS=1")
         ))
+    }
+
+    @Test
+    void testNonExistentCommit() {
+        helper.registerAllowedMethod("sh", [Map], { map ->
+            if (map.script.contains("git rev-parse")) {
+                return 2 // Simulate non-existent commit
+            }
+            return 0
+        })
+
+        runScript("tests/jenkins/jobs/RunGradleCheck_Jenkinsfile")
+        assertEquals('ABORTED', binding.getVariable('currentBuild').result)
     }
 
     def getCommandExecutions(methodName, command) {
