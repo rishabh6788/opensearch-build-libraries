@@ -13,12 +13,10 @@ pipeline {
         stage('integ-test') {
             steps {
                 script {
-                    runIntegTestScript(
-                        jobName: 'dummy_job',
-                        componentName: 'OpenSearch',
-                        buildManifest: 'tests/data/opensearch-2.8.0-build-windows.yml',
-                        testManifest: 'tests/data/opensearch-2.8.0-test.yml',
-                        ciGroup: ""
+                    processAndRunOsdIntegTest(
+                        localComponent: 'OpenSearch',
+                        ciGroup: "",
+                        switchUserNonRoot: 'false'
                     )
                 }
             }

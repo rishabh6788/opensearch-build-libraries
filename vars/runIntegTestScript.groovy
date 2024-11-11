@@ -55,14 +55,16 @@ void call(Map args = [:]) {
     String switchCommandStart = switchUser.equals('true') ? "su `id -un 1000` -c \"env PATH=\$PATH $javaHomeCommand" : "env PATH=\$PATH $javaHomeCommand"
     String switchCommandEnd = switchUser.equals('true') ? '"' : ''
 
+    String testManifest = "manifests/${args.testManifest}"
+
     String testCommand =
     [
         switchCommandStart,
         './test.sh',
         'integ-test',
-        "${args.testManifest}",
+        "${testManifest}",
         "--component ${component}",
-        "--ci-group ${args.ciGroup}",
+        isNullOrEmpty(args.ciGroup.toString()) ? "" : "--ci-group ${args.ciGroup}",
         "--test-run-id ${env.BUILD_NUMBER}",
         "--paths ${paths}",
         "--base-path ${basePath}",
@@ -98,3 +100,5 @@ String generatePaths(buildManifest, artifactRootUrl, localPath) {
 String generateBasePaths(buildManifest) {
     return ["${env.PUBLIC_ARTIFACT_URL}", "${env.JOB_NAME}", buildManifest.build.version, buildManifest.build.id, buildManifest.build.platform, buildManifest.build.architecture, buildManifest.build.distribution].join("/")
 }
+
+boolean isNullOrEmpty(String str) { return (str == null || str.allWhitespace || str.isEmpty()) }
