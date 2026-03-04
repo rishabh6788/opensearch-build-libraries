@@ -53,17 +53,17 @@
  */
 void call(Map args = [:]) {
 
-    lib = library(identifier: 'jenkins@main', retriever: legacySCM(scm))
+    lib = library(identifier: 'jenkins@aoss-v2', retriever: legacySCM(scm))
     def buildManifest = null
 
     if (!isNullOrEmpty(args.bundleManifest as String)){
         buildManifest = lib.jenkins.BuildManifest.new(readYaml(file: args.bundleManifest))
     }
 
-    def secret_artifacts = [
-        [envVar: 'ARTIFACT_BUCKET_NAME', secretRef: 'op://opensearch-infra-secrets/aws-resource-arns/jenkins-artifact-bucket-name'],
-        [envVar: 'AWS_ACCOUNT_PUBLIC', secretRef: 'op://opensearch-infra-secrets/aws-accounts/jenkins-aws-account-public']
-    ]
+    //def secret_artifacts = [
+    //    [envVar: 'ARTIFACT_BUCKET_NAME', secretRef: 'op://opensearch-infra-secrets/aws-resource-arns/jenkins-artifact-bucket-name'],
+    //    [envVar: 'AWS_ACCOUNT_PUBLIC', secretRef: 'op://opensearch-infra-secrets/aws-accounts/jenkins-aws-account-public']
+    //]
 
     boolean sigv4
     if (!isNullOrEmpty(args.sigv4)) {
@@ -72,9 +72,17 @@ void call(Map args = [:]) {
         sigv4 = false
     }
 
+    def assumeRoleAccount
+    if (!isNullOrEmpty(args.assumeRoleAccount)) {
+        assumeRoleAccount = args.assumeRoleAccount
+    } else {
+        assumeRoleAccount = '724293578735'
+    }
+
     def config_name = isNullOrEmpty(args.config) ? 'config.yml' : args.config
     def benchmark_config = sigv4 ? 'benchmark_sigv4.ini' : 'benchmark.ini'
-    withSecrets(secrets: secret_artifacts) {
+    withCredentials([string(credentialsId: 'jenkins-aws-account-public', variable: 'AWS_ACCOUNT_PUBLIC'),
+                     string(credentialsId: 'jenkins-artifact-bucket-name', variable: 'ARTIFACT_BUCKET_NAME')]) {
         withAWS(role: 'opensearch-test', roleAccount: "${AWS_ACCOUNT_PUBLIC}", duration: 900, roleSessionName: 'jenkins-session') {
             if(isNullOrEmpty(args.endpoint) && args.command == 'execute-test') {
                 s3Download(file: 'config.yml', bucket: "${ARTIFACT_BUCKET_NAME}", path: "${BENCHMARK_TEST_CONFIG_LOCATION}/${config_name}", force: true)
@@ -163,15 +171,13 @@ void call(Map args = [:]) {
         ].join(' ').trim()
     }
 
-    def secret_perf_account = [
-        [envVar: 'PERF_TEST_ACCOUNT_ID', secretRef: 'op://opensearch-infra-secrets/aws-accounts/perf-test-account-id']
-    ]
+    //def secret_perf_account = [
+    //    [envVar: 'PERF_TEST_ACCOUNT_ID', secretRef: 'op://opensearch-infra-secrets/aws-accounts/perf-test-account-id']
+    //]
 
     if (sigv4) {
-        withSecrets(secrets: secret_perf_account) {
-            withAWS(role: 'opensearch-full-access-nightlies', roleAccount: "${PERF_TEST_ACCOUNT_ID}", duration: 43200, roleSessionName: 'jenkins-session') {
-                sh """set +x && ${command}"""
-            }
+        withAWS(role: 'opensearch-full-access-nightlies', roleAccount: "${assumeRoleAccount}", duration: 43200, roleSessionName: 'jenkins-session') {
+            sh """set +x && ${command}"""
         }
     }
     else {
@@ -180,12 +186,8 @@ void call(Map args = [:]) {
 }
 
 void editBenchmarkConfig(String config_file) {
-    def secret_benchmark_metrics = [
-        [envVar: 'DATASTORE_USER', secretRef: 'op://opensearch-infra-secrets/benchmark-metrics/benchmark-metrics-datastore-user'],
-        [envVar: 'DATASTORE_PASSWORD', secretRef: 'op://opensearch-infra-secrets/benchmark-metrics/benchmark-metrics-datastore-password']
-    ]
-
-    withSecrets(secrets: secret_benchmark_metrics){
+    withCredentials([string(credentialsId: 'benchmark-metrics-datastore-user', variable: 'DATASTORE_USER'),
+                     string(credentialsId: 'benchmark-metrics-datastore-password', variable: 'DATASTORE_PASSWORD')]) {
         def file = readFile(file: "${config_file}")
         def contents = file.replace("insert_user_here", "${DATASTORE_USER}")
         contents = contents.replace("insert_password_here", "${DATASTORE_PASSWORD}")
@@ -193,6 +195,7 @@ void editBenchmarkConfig(String config_file) {
     }
 
 }
+
 
 String getMetadataTags(tags, buildManifest) {
     def metadataTags = null
