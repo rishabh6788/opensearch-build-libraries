@@ -96,7 +96,7 @@ void call(Map args = [:]) {
         }
     }
 
-    editBenchmarkConfig("${WORKSPACE}/benchmark.ini")
+   // editBenchmarkConfig("${WORKSPACE}/benchmark.ini")
 
     String command = ''
 
