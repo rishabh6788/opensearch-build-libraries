@@ -15,13 +15,13 @@ import jenkins.ReleaseMetricsData
  */
 void call(Map args = [:]) {
     def secret_metrics_cluster = [
-        [envVar: 'METRICS_HOST_ACCOUNT', secretRef: 'op://opensearch-infra-secrets/aws-accounts/jenkins-health-metrics-account-number'],
-        [envVar: 'METRICS_HOST_URL', secretRef: 'op://opensearch-infra-secrets/metrics-cluster/jenkins-health-metrics-cluster-endpoint']
+        [envVar: 'METRICS_HOST_ACCOUNT', secretRef: 'op://opensearch-release-secrets/aws-accounts/jenkins-health-metrics-account-number'],
+        [envVar: 'METRICS_HOST_URL', secretRef: 'op://opensearch-release-secrets/metrics-cluster/jenkins-health-metrics-cluster-endpoint']
     ]
 
     def secret_github_bot = [
-        [envVar: 'GITHUB_USER', secretRef: 'op://opensearch-infra-secrets/github-bot/ci-bot-username'],
-        [envVar: 'GITHUB_TOKEN', secretRef: 'op://opensearch-infra-secrets/github-bot/ci-bot-token']
+        [envVar: 'GITHUB_USER', secretRef: 'op://opensearch-release-secrets/github-bot/ci-bot-username'],
+        [envVar: 'GITHUB_TOKEN', secretRef: 'op://opensearch-release-secrets/github-bot/ci-bot-token']
     ]
 
     def inputManifest = args.inputManifest

@@ -33,7 +33,7 @@ void call(Map args = [:]) {
     def artifactPath = "${DISTRIBUTION_JOB_NAME}/${revision}/${DISTRIBUTION_BUILD_NUMBER}/${DISTRIBUTION_PLATFORM}/${DISTRIBUTION_ARCHITECTURE}/${distribution}"
 
     def secret_artifacts = [
-        [envVar: 'ARTIFACT_BUCKET_NAME', secretRef: 'op://opensearch-infra-secrets/aws-resource-arns/jenkins-artifact-bucket-name']
+        [envVar: 'ARTIFACT_BUCKET_NAME', secretRef: 'op://opensearch-release-secrets/aws-resource-arns/jenkins-artifact-bucket-name']
     ]
 
     withSecrets(secrets: secret_artifacts) {

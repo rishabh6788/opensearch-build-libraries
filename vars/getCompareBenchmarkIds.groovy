@@ -30,9 +30,9 @@ Map<String, String> call(Map args = [:]) {
 
 String getBaselineTestExecutionId(baselineClusterConfig, distributionVersion, workload) {
     def secret_benchmark_metrics = [
-        [envVar: 'DATASTORE_USER', secretRef: 'op://opensearch-infra-secrets/benchmark-metrics/benchmark-metrics-datastore-user'],
-        [envVar: 'DATASTORE_PASSWORD', secretRef: 'op://opensearch-infra-secrets/benchmark-metrics/benchmark-metrics-datastore-password'],
-        [envVar: 'DATASTORE_ENDPOINT', secretRef: 'op://opensearch-infra-secrets/benchmark-metrics/benchmark-metrics-datastore-nlb-endpoint']
+        [envVar: 'DATASTORE_USER', secretRef: 'op://opensearch-release-secrets/benchmark-metrics/benchmark-metrics-datastore-user'],
+        [envVar: 'DATASTORE_PASSWORD', secretRef: 'op://opensearch-release-secrets/benchmark-metrics/benchmark-metrics-datastore-password'],
+        [envVar: 'DATASTORE_ENDPOINT', secretRef: 'op://opensearch-release-secrets/benchmark-metrics/benchmark-metrics-datastore-nlb-endpoint']
     ]
 
     withSecrets(secrets: secret_benchmark_metrics){
@@ -87,9 +87,9 @@ String getBaselineTestExecutionId(baselineClusterConfig, distributionVersion, wo
 
 String getContenderTestExecutionId(pullRequestNumber, workload) {
     def secret_benchmark_metrics = [
-        [envVar: 'DATASTORE_USER', secretRef: 'op://opensearch-infra-secrets/benchmark-metrics/benchmark-metrics-datastore-user'],
-        [envVar: 'DATASTORE_PASSWORD', secretRef: 'op://opensearch-infra-secrets/benchmark-metrics/benchmark-metrics-datastore-password'],
-        [envVar: 'DATASTORE_ENDPOINT', secretRef: 'op://opensearch-infra-secrets/benchmark-metrics/benchmark-metrics-datastore-nlb-endpoint']
+        [envVar: 'DATASTORE_USER', secretRef: 'op://opensearch-release-secrets/benchmark-metrics/benchmark-metrics-datastore-user'],
+        [envVar: 'DATASTORE_PASSWORD', secretRef: 'op://opensearch-release-secrets/benchmark-metrics/benchmark-metrics-datastore-password'],
+        [envVar: 'DATASTORE_ENDPOINT', secretRef: 'op://opensearch-release-secrets/benchmark-metrics/benchmark-metrics-datastore-nlb-endpoint']
     ]
 
     withSecrets(secrets: secret_benchmark_metrics){

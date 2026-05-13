@@ -154,8 +154,8 @@ boolean argCheck(String str) { return (str == null || str.allWhitespace || str.i
 void indexTestFailuresData(testFailuresindexName, testFailuresFile) {
     echo("publishIntegTestResults: indexTestFailuresData called with indexName=${testFailuresindexName}, file=${testFailuresFile}")
     def secret_metrics_cluster = [
-        [envVar: 'METRICS_HOST_ACCOUNT', secretRef: 'op://opensearch-infra-secrets/aws-accounts/jenkins-health-metrics-account-number'],
-        [envVar: 'METRICS_HOST_URL', secretRef: 'op://opensearch-infra-secrets/metrics-cluster/jenkins-health-metrics-cluster-endpoint']
+        [envVar: 'METRICS_HOST_ACCOUNT', secretRef: 'op://opensearch-release-secrets/aws-accounts/jenkins-health-metrics-account-number'],
+        [envVar: 'METRICS_HOST_URL', secretRef: 'op://opensearch-release-secrets/metrics-cluster/jenkins-health-metrics-cluster-endpoint']
     ]
 
     withSecrets(secrets: secret_metrics_cluster){
@@ -278,8 +278,8 @@ void indexTestFailuresData(testFailuresindexName, testFailuresFile) {
 void indexFailedTestData(indexName, testRecordsFile) {
     echo("publishIntegTestResults: indexFailedTestData called with indexName=${indexName}, file=${testRecordsFile}")
     def secret_metrics_cluster = [
-        [envVar: 'METRICS_HOST_ACCOUNT', secretRef: 'op://opensearch-infra-secrets/aws-accounts/jenkins-health-metrics-account-number'],
-        [envVar: 'METRICS_HOST_URL', secretRef: 'op://opensearch-infra-secrets/metrics-cluster/jenkins-health-metrics-cluster-endpoint']
+        [envVar: 'METRICS_HOST_ACCOUNT', secretRef: 'op://opensearch-release-secrets/aws-accounts/jenkins-health-metrics-account-number'],
+        [envVar: 'METRICS_HOST_URL', secretRef: 'op://opensearch-release-secrets/metrics-cluster/jenkins-health-metrics-cluster-endpoint']
     ]
 
     withSecrets(secrets: secret_metrics_cluster){

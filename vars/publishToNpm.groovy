@@ -21,7 +21,7 @@ void call(Map args = [:]) {
     def npmTag = getNpmTag("${env.tag}")
 
     def secret_npm_token = [
-        [envVar: 'NPM_TOKEN', secretRef: 'op://opensearch-infra-secrets/npm/jenkins-opensearch-publish-to-npm-token']
+        [envVar: 'NPM_TOKEN', secretRef: 'op://opensearch-release-secrets/npm/jenkins-opensearch-publish-to-npm-token']
     ]
 
     withSecrets(secrets: secret_npm_token){

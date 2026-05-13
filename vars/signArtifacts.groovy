@@ -21,13 +21,13 @@ void call(Map args = [:]) {
     String email = args.email ?: "release@opensearch.org"
     if (args.sigtype.equals('.rpm')) {
         def secret_rpm_signing = [
-            [envVar: 'RPM_SIGNING_ACCOUNT_NUMBER', secretRef: 'op://opensearch-infra-secrets/rpm-signing/jenkins-rpm-signing-account-number'],
-            [envVar: 'RPM_RELEASE_SIGNING_PASSPHRASE_SECRETS_ARN', secretRef: 'op://opensearch-infra-secrets/rpm-signing/jenkins-rpm-release-signing-passphrase-secrets-arn'],
-            [envVar: 'RPM_RELEASE_SIGNING_SECRET_KEY_ID_SECRETS_ARN', secretRef: 'op://opensearch-infra-secrets/rpm-signing/jenkins-rpm-release-signing-secret-key-secrets-arn'],
-            [envVar: 'RPM_RELEASE_SIGNING_KEY_ID', secretRef: 'op://opensearch-infra-secrets/rpm-signing/jenkins-rpm-release-signing-key-id'],
-            [envVar: 'RPM_SIGNING_PASSPHRASE_SECRETS_ARN', secretRef: 'op://opensearch-infra-secrets/rpm-signing/jenkins-rpm-signing-passphrase-secrets-arn'],
-            [envVar: 'RPM_SIGNING_SECRET_KEY_ID_SECRETS_ARN', secretRef: 'op://opensearch-infra-secrets/rpm-signing/jenkins-rpm-signing-secret-key-secrets-arn'],
-            [envVar: 'RPM_SIGNING_KEY_ID', secretRef: 'op://opensearch-infra-secrets/rpm-signing/jenkins-rpm-signing-key-id']
+            [envVar: 'RPM_SIGNING_ACCOUNT_NUMBER', secretRef: 'op://opensearch-release-secrets/rpm-signing/jenkins-rpm-signing-account-number'],
+            [envVar: 'RPM_RELEASE_SIGNING_PASSPHRASE_SECRETS_ARN', secretRef: 'op://opensearch-release-secrets/rpm-signing/jenkins-rpm-release-signing-passphrase-secrets-arn'],
+            [envVar: 'RPM_RELEASE_SIGNING_SECRET_KEY_ID_SECRETS_ARN', secretRef: 'op://opensearch-release-secrets/rpm-signing/jenkins-rpm-release-signing-secret-key-secrets-arn'],
+            [envVar: 'RPM_RELEASE_SIGNING_KEY_ID', secretRef: 'op://opensearch-release-secrets/rpm-signing/jenkins-rpm-release-signing-key-id'],
+            [envVar: 'RPM_SIGNING_PASSPHRASE_SECRETS_ARN', secretRef: 'op://opensearch-release-secrets/rpm-signing/jenkins-rpm-signing-passphrase-secrets-arn'],
+            [envVar: 'RPM_SIGNING_SECRET_KEY_ID_SECRETS_ARN', secretRef: 'op://opensearch-release-secrets/rpm-signing/jenkins-rpm-signing-secret-key-secrets-arn'],
+            [envVar: 'RPM_SIGNING_KEY_ID', secretRef: 'op://opensearch-release-secrets/rpm-signing/jenkins-rpm-signing-key-id']
         ]
 
         withSecrets(secrets: secret_rpm_signing){
@@ -138,14 +138,14 @@ void call(Map args = [:]) {
             println('Using Windows signing')
 
             def secret_windows_signing = [
-                [envVar: 'GITHUB_USER', secretRef: 'op://opensearch-infra-secrets/github-bot/ci-bot-username'],
-                [envVar: 'GITHUB_TOKEN', secretRef: 'op://opensearch-infra-secrets/github-bot/ci-bot-token'],
-                [envVar: 'SIGNER_WINDOWS_ROLE', secretRef: 'op://opensearch-infra-secrets/windows-signing/jenkins-signer-windows-role'],
-                [envVar: 'SIGNER_WINDOWS_EXTERNAL_ID', secretRef: 'op://opensearch-infra-secrets/windows-signing/jenkins-signer-windows-external-id'],
-                [envVar: 'SIGNER_WINDOWS_UNSIGNED_BUCKET', secretRef: 'op://opensearch-infra-secrets/windows-signing/jenkins-signer-windows-unsigned-bucket'],
-                [envVar: 'SIGNER_WINDOWS_SIGNED_BUCKET', secretRef: 'op://opensearch-infra-secrets/windows-signing/jenkins-signer-windows-signed-bucket'],
-                [envVar: 'SIGNER_WINDOWS_PROFILE_IDENTIFIER', secretRef: 'op://opensearch-infra-secrets/windows-signing/jenkins-signer-windows-profile-identifier'],
-                [envVar: 'SIGNER_WINDOWS_PLATFORM_IDENTIFIER', secretRef: 'op://opensearch-infra-secrets/windows-signing/jenkins-signer-windows-platform-identifier']
+                [envVar: 'GITHUB_USER', secretRef: 'op://opensearch-release-secrets/github-bot/ci-bot-username'],
+                [envVar: 'GITHUB_TOKEN', secretRef: 'op://opensearch-release-secrets/github-bot/ci-bot-token'],
+                [envVar: 'SIGNER_WINDOWS_ROLE', secretRef: 'op://opensearch-release-secrets/windows-signing/jenkins-signer-windows-role'],
+                [envVar: 'SIGNER_WINDOWS_EXTERNAL_ID', secretRef: 'op://opensearch-release-secrets/windows-signing/jenkins-signer-windows-external-id'],
+                [envVar: 'SIGNER_WINDOWS_UNSIGNED_BUCKET', secretRef: 'op://opensearch-release-secrets/windows-signing/jenkins-signer-windows-unsigned-bucket'],
+                [envVar: 'SIGNER_WINDOWS_SIGNED_BUCKET', secretRef: 'op://opensearch-release-secrets/windows-signing/jenkins-signer-windows-signed-bucket'],
+                [envVar: 'SIGNER_WINDOWS_PROFILE_IDENTIFIER', secretRef: 'op://opensearch-release-secrets/windows-signing/jenkins-signer-windows-profile-identifier'],
+                [envVar: 'SIGNER_WINDOWS_PLATFORM_IDENTIFIER', secretRef: 'op://opensearch-release-secrets/windows-signing/jenkins-signer-windows-platform-identifier']
             ]
             withSecrets(secrets: secret_windows_signing){
                 sh """#!/bin/bash
@@ -165,12 +165,12 @@ void call(Map args = [:]) {
             println('Using MAC signing')
 
             def secret_mac_signing = [
-                [envVar: 'GITHUB_USER', secretRef: 'op://opensearch-infra-secrets/github-bot/ci-bot-username'],
-                [envVar: 'GITHUB_TOKEN', secretRef: 'op://opensearch-infra-secrets/github-bot/ci-bot-token'],
-                [envVar: 'SIGNER_MAC_ROLE', secretRef: 'op://opensearch-infra-secrets/mac-signing/jenkins-signer-mac-role'],
-                [envVar: 'SIGNER_MAC_EXTERNAL_ID', secretRef: 'op://opensearch-infra-secrets/mac-signing/jenkins-signer-mac-external-id'],
-                [envVar: 'SIGNER_MAC_UNSIGNED_BUCKET', secretRef: 'op://opensearch-infra-secrets/mac-signing/jenkins-signer-mac-unsigned-bucket'],
-                [envVar: 'SIGNER_MAC_SIGNED_BUCKET', secretRef: 'op://opensearch-infra-secrets/mac-signing/jenkins-signer-mac-signed-bucket']
+                [envVar: 'GITHUB_USER', secretRef: 'op://opensearch-release-secrets/github-bot/ci-bot-username'],
+                [envVar: 'GITHUB_TOKEN', secretRef: 'op://opensearch-release-secrets/github-bot/ci-bot-token'],
+                [envVar: 'SIGNER_MAC_ROLE', secretRef: 'op://opensearch-release-secrets/mac-signing/jenkins-signer-mac-role'],
+                [envVar: 'SIGNER_MAC_EXTERNAL_ID', secretRef: 'op://opensearch-release-secrets/mac-signing/jenkins-signer-mac-external-id'],
+                [envVar: 'SIGNER_MAC_UNSIGNED_BUCKET', secretRef: 'op://opensearch-release-secrets/mac-signing/jenkins-signer-mac-unsigned-bucket'],
+                [envVar: 'SIGNER_MAC_SIGNED_BUCKET', secretRef: 'op://opensearch-release-secrets/mac-signing/jenkins-signer-mac-signed-bucket']
             ]
             withSecrets(secrets: secret_mac_signing){
                 sh """#!/bin/bash
@@ -187,12 +187,12 @@ void call(Map args = [:]) {
             println('Using jar signing')
 
             def secret_jar_signing = [
-                [envVar: 'GITHUB_USER', secretRef: 'op://opensearch-infra-secrets/github-bot/ci-bot-username'],
-                [envVar: 'GITHUB_TOKEN', secretRef: 'op://opensearch-infra-secrets/github-bot/ci-bot-token'],
-                [envVar: 'JAR_SIGNER_ROLE', secretRef: 'op://opensearch-infra-secrets/jar-signing/jenkins-jar-signer-role'],
-                [envVar: 'JAR_SIGNER_EXTERNAL_ID', secretRef: 'op://opensearch-infra-secrets/jar-signing/jenkins-jar-signer-external-id'],
-                [envVar: 'JAR_SIGNER_UNSIGNED_BUCKET', secretRef: 'op://opensearch-infra-secrets/jar-signing/jenkins-jar-signer-unsigned-bucket'],
-                [envVar: 'JAR_SIGNER_SIGNED_BUCKET', secretRef: 'op://opensearch-infra-secrets/jar-signing/jenkins-jar-signer-signed-bucket']
+                [envVar: 'GITHUB_USER', secretRef: 'op://opensearch-release-secrets/github-bot/ci-bot-username'],
+                [envVar: 'GITHUB_TOKEN', secretRef: 'op://opensearch-release-secrets/github-bot/ci-bot-token'],
+                [envVar: 'JAR_SIGNER_ROLE', secretRef: 'op://opensearch-release-secrets/jar-signing/jenkins-jar-signer-role'],
+                [envVar: 'JAR_SIGNER_EXTERNAL_ID', secretRef: 'op://opensearch-release-secrets/jar-signing/jenkins-jar-signer-external-id'],
+                [envVar: 'JAR_SIGNER_UNSIGNED_BUCKET', secretRef: 'op://opensearch-release-secrets/jar-signing/jenkins-jar-signer-unsigned-bucket'],
+                [envVar: 'JAR_SIGNER_SIGNED_BUCKET', secretRef: 'op://opensearch-release-secrets/jar-signing/jenkins-jar-signer-signed-bucket']
             ]
             withSecrets(secrets: secret_jar_signing){
                 sh """#!/bin/bash
@@ -210,12 +210,12 @@ void call(Map args = [:]) {
             importPGPKey()
 
             def secret_client_signing = [
-                [envVar: 'GITHUB_USER', secretRef: 'op://opensearch-infra-secrets/github-bot/ci-bot-username'],
-                [envVar: 'GITHUB_TOKEN', secretRef: 'op://opensearch-infra-secrets/github-bot/ci-bot-token'],
-                [envVar: 'SIGNER_CLIENT_ROLE', secretRef: 'op://opensearch-infra-secrets/client-signing/jenkins-signer-client-role'],
-                [envVar: 'SIGNER_CLIENT_EXTERNAL_ID', secretRef: 'op://opensearch-infra-secrets/client-signing/jenkins-signer-client-external-id'],
-                [envVar: 'SIGNER_CLIENT_UNSIGNED_BUCKET', secretRef: 'op://opensearch-infra-secrets/client-signing/jenkins-signer-client-unsigned-bucket'],
-                [envVar: 'SIGNER_CLIENT_SIGNED_BUCKET', secretRef: 'op://opensearch-infra-secrets/client-signing/jenkins-signer-client-signed-bucket']
+                [envVar: 'GITHUB_USER', secretRef: 'op://opensearch-release-secrets/github-bot/ci-bot-username'],
+                [envVar: 'GITHUB_TOKEN', secretRef: 'op://opensearch-release-secrets/github-bot/ci-bot-token'],
+                [envVar: 'SIGNER_CLIENT_ROLE', secretRef: 'op://opensearch-release-secrets/client-signing/jenkins-signer-client-role'],
+                [envVar: 'SIGNER_CLIENT_EXTERNAL_ID', secretRef: 'op://opensearch-release-secrets/client-signing/jenkins-signer-client-external-id'],
+                [envVar: 'SIGNER_CLIENT_UNSIGNED_BUCKET', secretRef: 'op://opensearch-release-secrets/client-signing/jenkins-signer-client-unsigned-bucket'],
+                [envVar: 'SIGNER_CLIENT_SIGNED_BUCKET', secretRef: 'op://opensearch-release-secrets/client-signing/jenkins-signer-client-signed-bucket']
             ]
 
             withSecrets(secrets: secret_client_signing){

@@ -18,18 +18,18 @@
  */
 void call(Map args = [:]) {
     def secret_dockerhub_staging = [
-        [envVar: 'DOCKER_USERNAME', secretRef: 'op://opensearch-infra-secrets/dockerhub-staging-credentials/username'],
-        [envVar: 'DOCKER_PASSWORD', secretRef: 'op://opensearch-infra-secrets/dockerhub-staging-credentials/password']
+        [envVar: 'DOCKER_USERNAME', secretRef: 'op://opensearch-release-secrets/dockerhub-staging-credentials/username'],
+        [envVar: 'DOCKER_PASSWORD', secretRef: 'op://opensearch-release-secrets/dockerhub-staging-credentials/password']
     ]
 
     def secret_dockerhub_production = [
-        [envVar: 'DOCKER_USERNAME', secretRef: 'op://opensearch-infra-secrets/dockerhub-production-credentials/username'],
-        [envVar: 'DOCKER_PASSWORD', secretRef: 'op://opensearch-infra-secrets/dockerhub-production-credentials/password']
+        [envVar: 'DOCKER_USERNAME', secretRef: 'op://opensearch-release-secrets/dockerhub-production-credentials/username'],
+        [envVar: 'DOCKER_PASSWORD', secretRef: 'op://opensearch-release-secrets/dockerhub-production-credentials/password']
     ]
 
     def secret_ecr_production = [
-        [envVar: 'ARTIFACT_PROMOTION_ROLE_NAME', secretRef: 'op://opensearch-infra-secrets/aws-iam-roles/jenkins-artifact-promotion-role'],
-        [envVar: 'AWS_ACCOUNT_ARTIFACT', secretRef: 'op://opensearch-infra-secrets/aws-accounts/jenkins-aws-production-account']
+        [envVar: 'ARTIFACT_PROMOTION_ROLE_NAME', secretRef: 'op://opensearch-release-secrets/aws-iam-roles/jenkins-artifact-promotion-role'],
+        [envVar: 'AWS_ACCOUNT_ARTIFACT', secretRef: 'op://opensearch-release-secrets/aws-accounts/jenkins-aws-production-account']
     ]
 
     all_tags = args.allTags ?: false

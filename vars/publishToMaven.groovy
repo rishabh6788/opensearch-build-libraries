@@ -32,8 +32,8 @@ void call(Map args = [:]) {
     println("Stage and Release Maven artifacts.")
 
     def secret_maven_central = [
-        [envVar: 'SONATYPE_USERNAME', secretRef: 'op://opensearch-infra-secrets/maven-central-portal-credentials/username'],
-        [envVar: 'SONATYPE_PASSWORD', secretRef: 'op://opensearch-infra-secrets/maven-central-portal-credentials/password']
+        [envVar: 'SONATYPE_USERNAME', secretRef: 'op://opensearch-release-secrets/maven-central-portal-credentials/username'],
+        [envVar: 'SONATYPE_PASSWORD', secretRef: 'op://opensearch-release-secrets/maven-central-portal-credentials/password']
     ]
 
     withSecrets(secrets: secret_maven_central){

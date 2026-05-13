@@ -20,7 +20,7 @@ void call(Map args = [:]) {
     checkout([$class: 'GitSCM', userRemoteConfigs: [[url: "${args.repository}" ]], branches: [[name: "${args.tag}" ]]])
 
     def secret_rust = [
-        [envVar: 'API_TOKEN', secretRef: 'op://opensearch-infra-secrets/rust/crates-api-token']
+        [envVar: 'API_TOKEN', secretRef: 'op://opensearch-release-secrets/rust/crates-api-token']
     ]
 
     withSecrets(secrets: secret_rust){

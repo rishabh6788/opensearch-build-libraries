@@ -61,9 +61,9 @@ void call(Map args = [:]) {
     String artifactPath = "${localPath}/${RepoProdPath}"
 
     def secret_artifacts = [
-        [envVar: 'ARTIFACT_PROMOTION_ROLE_NAME', secretRef: 'op://opensearch-infra-secrets/aws-iam-roles/jenkins-artifact-promotion-role'],
-        [envVar: 'AWS_ACCOUNT_ARTIFACT', secretRef: 'op://opensearch-infra-secrets/aws-accounts/jenkins-aws-production-account'],
-        [envVar: 'ARTIFACT_PRODUCTION_BUCKET_NAME', secretRef: 'op://opensearch-infra-secrets/aws-resource-arns/jenkins-artifact-production-bucket-name']
+        [envVar: 'ARTIFACT_PROMOTION_ROLE_NAME', secretRef: 'op://opensearch-release-secrets/aws-iam-roles/jenkins-artifact-promotion-role'],
+        [envVar: 'AWS_ACCOUNT_ARTIFACT', secretRef: 'op://opensearch-release-secrets/aws-accounts/jenkins-aws-production-account'],
+        [envVar: 'ARTIFACT_PRODUCTION_BUCKET_NAME', secretRef: 'op://opensearch-release-secrets/aws-resource-arns/jenkins-artifact-production-bucket-name']
     ]
 
     withSecrets(secrets: secret_artifacts){
@@ -167,13 +167,13 @@ void call(Map args = [:]) {
             """
 
             def secret_rpm_signing = [
-                [envVar: 'RPM_SIGNING_ACCOUNT_NUMBER', secretRef: 'op://opensearch-infra-secrets/rpm-signing/jenkins-rpm-signing-account-number'],
-                [envVar: 'RPM_RELEASE_SIGNING_PASSPHRASE_SECRETS_ARN', secretRef: 'op://opensearch-infra-secrets/rpm-signing/jenkins-rpm-release-signing-passphrase-secrets-arn'],
-                [envVar: 'RPM_RELEASE_SIGNING_SECRET_KEY_ID_SECRETS_ARN', secretRef: 'op://opensearch-infra-secrets/rpm-signing/jenkins-rpm-release-signing-secret-key-secrets-arn'],
-                [envVar: 'RPM_RELEASE_SIGNING_KEY_ID', secretRef: 'op://opensearch-infra-secrets/rpm-signing/jenkins-rpm-release-signing-key-id'],
-                [envVar: 'RPM_SIGNING_PASSPHRASE_SECRETS_ARN', secretRef: 'op://opensearch-infra-secrets/rpm-signing/jenkins-rpm-signing-passphrase-secrets-arn'],
-                [envVar: 'RPM_SIGNING_SECRET_KEY_ID_SECRETS_ARN', secretRef: 'op://opensearch-infra-secrets/rpm-signing/jenkins-rpm-signing-secret-key-secrets-arn'],
-                [envVar: 'RPM_SIGNING_KEY_ID', secretRef: 'op://opensearch-infra-secrets/rpm-signing/jenkins-rpm-signing-key-id']
+                [envVar: 'RPM_SIGNING_ACCOUNT_NUMBER', secretRef: 'op://opensearch-release-secrets/rpm-signing/jenkins-rpm-signing-account-number'],
+                [envVar: 'RPM_RELEASE_SIGNING_PASSPHRASE_SECRETS_ARN', secretRef: 'op://opensearch-release-secrets/rpm-signing/jenkins-rpm-release-signing-passphrase-secrets-arn'],
+                [envVar: 'RPM_RELEASE_SIGNING_SECRET_KEY_ID_SECRETS_ARN', secretRef: 'op://opensearch-release-secrets/rpm-signing/jenkins-rpm-release-signing-secret-key-secrets-arn'],
+                [envVar: 'RPM_RELEASE_SIGNING_KEY_ID', secretRef: 'op://opensearch-release-secrets/rpm-signing/jenkins-rpm-release-signing-key-id'],
+                [envVar: 'RPM_SIGNING_PASSPHRASE_SECRETS_ARN', secretRef: 'op://opensearch-release-secrets/rpm-signing/jenkins-rpm-signing-passphrase-secrets-arn'],
+                [envVar: 'RPM_SIGNING_SECRET_KEY_ID_SECRETS_ARN', secretRef: 'op://opensearch-release-secrets/rpm-signing/jenkins-rpm-signing-secret-key-secrets-arn'],
+                [envVar: 'RPM_SIGNING_KEY_ID', secretRef: 'op://opensearch-release-secrets/rpm-signing/jenkins-rpm-signing-key-id']
             ]
 
             withSecrets(secrets: secret_rpm_signing){
