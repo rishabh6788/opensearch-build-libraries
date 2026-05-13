@@ -192,7 +192,7 @@ fi
                   publishToMaven.signArtifacts({artifactPath=/path/to/signing, type=maven, platform=linux, sigtype=.asc, email=release@opensearch.org})
                      signArtifacts.fileExists(workspace/sign.sh)
                      signArtifacts.sh(curl -sSL https://artifacts.opensearch.org/publickeys/opensearch.pgp | gpg --import - && curl -sSL https://artifacts.opensearch.org/publickeys/opensearch-release.pgp | gpg --import -)
-                     signArtifacts.withSecrets({secrets=[{envVar=GITHUB_USER, secretRef=op://opensearch-infra-secrets/github-bot/ci-bot-username}, {envVar=GITHUB_TOKEN, secretRef=op://opensearch-infra-secrets/github-bot/ci-bot-token}, {envVar=SIGNER_CLIENT_ROLE, secretRef=op://opensearch-infra-secrets/client-signing/jenkins-signer-client-role}, {envVar=SIGNER_CLIENT_EXTERNAL_ID, secretRef=op://opensearch-infra-secrets/client-signing/jenkins-signer-client-external-id}, {envVar=SIGNER_CLIENT_UNSIGNED_BUCKET, secretRef=op://opensearch-infra-secrets/client-signing/jenkins-signer-client-unsigned-bucket}, {envVar=SIGNER_CLIENT_SIGNED_BUCKET, secretRef=op://opensearch-infra-secrets/client-signing/jenkins-signer-client-signed-bucket}]}, groovy.lang.Closure)
+                     signArtifacts.withSecrets({secrets=[{envVar=GITHUB_USER, secretRef=op://opensearch-release-secrets/github-bot/ci-bot-username}, {envVar=GITHUB_TOKEN, secretRef=op://opensearch-release-secrets/github-bot/ci-bot-token}, {envVar=SIGNER_CLIENT_ROLE, secretRef=op://opensearch-release-secrets/client-signing/jenkins-signer-client-role}, {envVar=SIGNER_CLIENT_EXTERNAL_ID, secretRef=op://opensearch-release-secrets/client-signing/jenkins-signer-client-external-id}, {envVar=SIGNER_CLIENT_UNSIGNED_BUCKET, secretRef=op://opensearch-release-secrets/client-signing/jenkins-signer-client-unsigned-bucket}, {envVar=SIGNER_CLIENT_SIGNED_BUCKET, secretRef=op://opensearch-release-secrets/client-signing/jenkins-signer-client-signed-bucket}]}, groovy.lang.Closure)
                         signArtifacts.sh(#!/bin/bash
                    set +x
                    export ROLE=SIGNER_CLIENT_ROLE
@@ -202,5 +202,5 @@ fi
 
                    workspace/sign.sh /path/to/signing --type maven --platform linux --sigtype .asc --email release@opensearch.org
                )
-                  publishToMaven.withSecrets({secrets=[{envVar=SONATYPE_USERNAME, secretRef=op://opensearch-infra-secrets/maven-central-portal-credentials/username}, {envVar=SONATYPE_PASSWORD, secretRef=op://opensearch-infra-secrets/maven-central-portal-credentials/password}]}, groovy.lang.Closure)
+                  publishToMaven.withSecrets({secrets=[{envVar=SONATYPE_USERNAME, secretRef=op://opensearch-release-secrets/maven-central-portal-credentials/username}, {envVar=SONATYPE_PASSWORD, secretRef=op://opensearch-release-secrets/maven-central-portal-credentials/password}]}, groovy.lang.Closure)
                      publishToMaven.sh(./stage-maven-release.sh -d /path/to/maven/artifacts -a true)

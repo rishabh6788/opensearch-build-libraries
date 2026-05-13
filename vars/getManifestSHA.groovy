@@ -8,8 +8,8 @@
  */
 Map call(Map args = [:]) {
     def secret_artifacts = [
-        [envVar: 'ARTIFACT_BUCKET_NAME', secretRef: 'op://opensearch-infra-secrets/aws-resource-arns/jenkins-artifact-bucket-name'],
-        [envVar: 'AWS_ACCOUNT_PUBLIC', secretRef: 'op://opensearch-infra-secrets/aws-accounts/jenkins-aws-account-public']
+        [envVar: 'ARTIFACT_BUCKET_NAME', secretRef: 'op://opensearch-release-secrets/aws-resource-arns/jenkins-artifact-bucket-name'],
+        [envVar: 'AWS_ACCOUNT_PUBLIC', secretRef: 'op://opensearch-release-secrets/aws-accounts/jenkins-aws-account-public']
     ]
     String inputManifest = args.inputManifest ?: "manifests/${INPUT_MANIFEST}"
     String jobName = args.jobName ?: "${JOB_NAME}"

@@ -23,8 +23,8 @@ void call(Map args = [:]) {
     )
 
     def secret_pypi_credentials = [
-        [envVar: 'TWINE_USERNAME', secretRef: 'op://opensearch-infra-secrets/pypi/twine-username'],
-        [envVar: 'TWINE_PASSWORD', secretRef: "op://opensearch-infra-secrets/pypi/${args.credentialId}"]
+        [envVar: 'TWINE_USERNAME', secretRef: 'op://opensearch-release-secrets/pypi/twine-username'],
+        [envVar: 'TWINE_PASSWORD', secretRef: "op://opensearch-release-secrets/pypi/${args.credentialId}"]
     ]
 
     withSecrets(secrets: secret_pypi_credentials){

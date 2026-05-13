@@ -14,8 +14,8 @@ void call(Map args = [:]) {
     config_name = isNullOrEmpty(args.config) ? "config.yml" : args.config
 
     def secret_artifacts = [
-        [envVar: 'ARTIFACT_BUCKET_NAME', secretRef: 'op://opensearch-infra-secrets/aws-resource-arns/jenkins-artifact-bucket-name'],
-        [envVar: 'AWS_ACCOUNT_PUBLIC', secretRef: 'op://opensearch-infra-secrets/aws-accounts/jenkins-aws-account-public']
+        [envVar: 'ARTIFACT_BUCKET_NAME', secretRef: 'op://opensearch-release-secrets/aws-resource-arns/jenkins-artifact-bucket-name'],
+        [envVar: 'AWS_ACCOUNT_PUBLIC', secretRef: 'op://opensearch-release-secrets/aws-accounts/jenkins-aws-account-public']
     ]
 
     withSecrets(secrets: secret_artifacts) {
@@ -27,8 +27,8 @@ void call(Map args = [:]) {
     String stackNameSuffix = isNullOrEmpty(args.stackNameSuffix) ? 'perf-test' : args.stackNameSuffix
 
     def secret_github_bot = [
-        [envVar: 'GITHUB_USER', secretRef: 'op://opensearch-infra-secrets/github-bot/ci-bot-username'],
-        [envVar: 'GITHUB_TOKEN', secretRef: 'op://opensearch-infra-secrets/github-bot/ci-bot-token']
+        [envVar: 'GITHUB_USER', secretRef: 'op://opensearch-release-secrets/github-bot/ci-bot-username'],
+        [envVar: 'GITHUB_TOKEN', secretRef: 'op://opensearch-release-secrets/github-bot/ci-bot-token']
     ]
 
     withSecrets(secrets: secret_github_bot){

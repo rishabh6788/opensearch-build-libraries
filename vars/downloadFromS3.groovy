@@ -21,7 +21,7 @@ void call(Map args = [:]) {
     String region = args.region ?: 'us-east-1'
 
     def secret_aws_account = [
-        [envVar: 'AWS_ACCOUNT_NUMBER', secretRef: "op://opensearch-infra-secrets/aws-accounts/${args.roleAccountNumberCred}"]
+        [envVar: 'AWS_ACCOUNT_NUMBER', secretRef: "op://opensearch-release-secrets/aws-accounts/${args.roleAccountNumberCred}"]
     ]
 
     withSecrets(secrets: secret_aws_account){

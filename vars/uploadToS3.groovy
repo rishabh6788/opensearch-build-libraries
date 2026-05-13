@@ -8,7 +8,7 @@
  */
 void call(Map args = [:]) {
     def secret_s3 = [
-        [envVar: 'AWS_ACCOUNT_PUBLIC', secretRef: 'op://opensearch-infra-secrets/aws-accounts/jenkins-aws-account-public']
+        [envVar: 'AWS_ACCOUNT_PUBLIC', secretRef: 'op://opensearch-release-secrets/aws-accounts/jenkins-aws-account-public']
     ]
 
     withSecrets(secrets: secret_s3){

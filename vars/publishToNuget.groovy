@@ -39,7 +39,7 @@ void call(Map args = [:]) {
     """
 
     def secret_nuget_key = [
-        [envVar: 'API_KEY', secretRef: "op://opensearch-infra-secrets/nuget/${args.apiKeyCredentialId}"]
+        [envVar: 'API_KEY', secretRef: "op://opensearch-release-secrets/nuget/${args.apiKeyCredentialId}"]
     ]
 
     withSecrets(secrets: secret_nuget_key){

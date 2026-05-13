@@ -36,8 +36,8 @@ void call(Map args = [:]) {
     println('Uploading the artifacts')
 
     def secret_artifacts = [
-        [envVar: 'AWS_ACCOUNT_ARTIFACT', secretRef: 'op://opensearch-infra-secrets/aws-accounts/jenkins-aws-production-account'],
-        [envVar: 'ARTIFACT_PRODUCTION_BUCKET_NAME', secretRef: 'op://opensearch-infra-secrets/aws-resource-arns/jenkins-artifact-production-bucket-name']
+        [envVar: 'AWS_ACCOUNT_ARTIFACT', secretRef: 'op://opensearch-release-secrets/aws-accounts/jenkins-aws-production-account'],
+        [envVar: 'ARTIFACT_PRODUCTION_BUCKET_NAME', secretRef: 'op://opensearch-release-secrets/aws-resource-arns/jenkins-artifact-production-bucket-name']
     ]
 
     withSecrets(secrets: secret_artifacts){

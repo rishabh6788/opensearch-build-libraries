@@ -61,8 +61,8 @@ void call(Map args = [:]) {
     }
 
     def secret_artifacts = [
-        [envVar: 'ARTIFACT_BUCKET_NAME', secretRef: 'op://opensearch-infra-secrets/aws-resource-arns/jenkins-artifact-bucket-name'],
-        [envVar: 'AWS_ACCOUNT_PUBLIC', secretRef: 'op://opensearch-infra-secrets/aws-accounts/jenkins-aws-account-public']
+        [envVar: 'ARTIFACT_BUCKET_NAME', secretRef: 'op://opensearch-release-secrets/aws-resource-arns/jenkins-artifact-bucket-name'],
+        [envVar: 'AWS_ACCOUNT_PUBLIC', secretRef: 'op://opensearch-release-secrets/aws-accounts/jenkins-aws-account-public']
     ]
 
     boolean sigv4
@@ -164,7 +164,7 @@ void call(Map args = [:]) {
     }
 
     def secret_perf_account = [
-        [envVar: 'PERF_TEST_ACCOUNT_ID', secretRef: 'op://opensearch-infra-secrets/aws-accounts/perf-test-account-id']
+        [envVar: 'PERF_TEST_ACCOUNT_ID', secretRef: 'op://opensearch-release-secrets/aws-accounts/perf-test-account-id']
     ]
 
     if (sigv4) {
@@ -181,8 +181,8 @@ void call(Map args = [:]) {
 
 void editBenchmarkConfig(String config_file) {
     def secret_benchmark_metrics = [
-        [envVar: 'DATASTORE_USER', secretRef: 'op://opensearch-infra-secrets/benchmark-metrics/benchmark-metrics-datastore-user'],
-        [envVar: 'DATASTORE_PASSWORD', secretRef: 'op://opensearch-infra-secrets/benchmark-metrics/benchmark-metrics-datastore-password']
+        [envVar: 'DATASTORE_USER', secretRef: 'op://opensearch-release-secrets/benchmark-metrics/benchmark-metrics-datastore-user'],
+        [envVar: 'DATASTORE_PASSWORD', secretRef: 'op://opensearch-release-secrets/benchmark-metrics/benchmark-metrics-datastore-password']
     ]
 
     withSecrets(secrets: secret_benchmark_metrics){

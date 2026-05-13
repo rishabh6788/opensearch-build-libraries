@@ -9,7 +9,7 @@
                   publishToPyPi.signArtifacts({artifactPath=/tmp/workspace/test, sigtype=.asc, platform=linux})
                      signArtifacts.fileExists(/tmp/workspace/sign.sh)
                      signArtifacts.sh(curl -sSL https://artifacts.opensearch.org/publickeys/opensearch.pgp | gpg --import - && curl -sSL https://artifacts.opensearch.org/publickeys/opensearch-release.pgp | gpg --import -)
-                     signArtifacts.withSecrets({secrets=[{envVar=GITHUB_USER, secretRef=op://opensearch-infra-secrets/github-bot/ci-bot-username}, {envVar=GITHUB_TOKEN, secretRef=op://opensearch-infra-secrets/github-bot/ci-bot-token}, {envVar=SIGNER_CLIENT_ROLE, secretRef=op://opensearch-infra-secrets/client-signing/jenkins-signer-client-role}, {envVar=SIGNER_CLIENT_EXTERNAL_ID, secretRef=op://opensearch-infra-secrets/client-signing/jenkins-signer-client-external-id}, {envVar=SIGNER_CLIENT_UNSIGNED_BUCKET, secretRef=op://opensearch-infra-secrets/client-signing/jenkins-signer-client-unsigned-bucket}, {envVar=SIGNER_CLIENT_SIGNED_BUCKET, secretRef=op://opensearch-infra-secrets/client-signing/jenkins-signer-client-signed-bucket}]}, groovy.lang.Closure)
+                     signArtifacts.withSecrets({secrets=[{envVar=GITHUB_USER, secretRef=op://opensearch-release-secrets/github-bot/ci-bot-username}, {envVar=GITHUB_TOKEN, secretRef=op://opensearch-release-secrets/github-bot/ci-bot-token}, {envVar=SIGNER_CLIENT_ROLE, secretRef=op://opensearch-release-secrets/client-signing/jenkins-signer-client-role}, {envVar=SIGNER_CLIENT_EXTERNAL_ID, secretRef=op://opensearch-release-secrets/client-signing/jenkins-signer-client-external-id}, {envVar=SIGNER_CLIENT_UNSIGNED_BUCKET, secretRef=op://opensearch-release-secrets/client-signing/jenkins-signer-client-unsigned-bucket}, {envVar=SIGNER_CLIENT_SIGNED_BUCKET, secretRef=op://opensearch-release-secrets/client-signing/jenkins-signer-client-signed-bucket}]}, groovy.lang.Closure)
                         signArtifacts.sh(#!/bin/bash
                    set +x
                    export ROLE=SIGNER_CLIENT_ROLE
@@ -19,5 +19,5 @@
 
                    /tmp/workspace/sign.sh /tmp/workspace/test --sigtype .asc --platform linux
                )
-                  publishToPyPi.withSecrets({secrets=[{envVar=TWINE_USERNAME, secretRef=op://opensearch-infra-secrets/pypi/twine-username}, {envVar=TWINE_PASSWORD, secretRef=op://opensearch-infra-secrets/pypi/pypi-token}]}, groovy.lang.Closure)
+                  publishToPyPi.withSecrets({secrets=[{envVar=TWINE_USERNAME, secretRef=op://opensearch-release-secrets/pypi/twine-username}, {envVar=TWINE_PASSWORD, secretRef=op://opensearch-release-secrets/pypi/pypi-token}]}, groovy.lang.Closure)
                      publishToPyPi.sh(twine upload -r pypi /tmp/workspace/test/*)

@@ -18,7 +18,7 @@ void call(Map args = [:]) {
     ] - null).join("\n")
 
     def secret_webhook = [
-        [envVar: 'WEBHOOK_URL', secretRef: "op://opensearch-infra-secrets/webhook/${args.credentialsId}"]
+        [envVar: 'WEBHOOK_URL', secretRef: "op://opensearch-release-secrets/webhook/${args.credentialsId}"]
     ]
 
     withSecrets(secrets: secret_webhook){

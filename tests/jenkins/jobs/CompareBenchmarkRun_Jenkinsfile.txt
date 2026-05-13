@@ -4,7 +4,7 @@
          CompareBenchmarkRun_Jenkinsfile.stage(compare-benchmark-test, groovy.lang.Closure)
             CompareBenchmarkRun_Jenkinsfile.script(groovy.lang.Closure)
                CompareBenchmarkRun_Jenkinsfile.getCompareBenchmarkIds({baselineClusterConfig=test-baseline-config, distributionVersion=3.0.0, workload=big5, pullRequestNumber=12345})
-                  getCompareBenchmarkIds.withSecrets({secrets=[{envVar=DATASTORE_USER, secretRef=op://opensearch-infra-secrets/benchmark-metrics/benchmark-metrics-datastore-user}, {envVar=DATASTORE_PASSWORD, secretRef=op://opensearch-infra-secrets/benchmark-metrics/benchmark-metrics-datastore-password}, {envVar=DATASTORE_ENDPOINT, secretRef=op://opensearch-infra-secrets/benchmark-metrics/benchmark-metrics-datastore-nlb-endpoint}]}, groovy.lang.Closure)
+                  getCompareBenchmarkIds.withSecrets({secrets=[{envVar=DATASTORE_USER, secretRef=op://opensearch-release-secrets/benchmark-metrics/benchmark-metrics-datastore-user}, {envVar=DATASTORE_PASSWORD, secretRef=op://opensearch-release-secrets/benchmark-metrics/benchmark-metrics-datastore-password}, {envVar=DATASTORE_ENDPOINT, secretRef=op://opensearch-release-secrets/benchmark-metrics/benchmark-metrics-datastore-nlb-endpoint}]}, groovy.lang.Closure)
                      getCompareBenchmarkIds.sh({script=
               curl -X POST "https://DATASTORE_ENDPOINT/benchmark-results-*/_search" -ku DATASTORE_USER:DATASTORE_PASSWORD -H 'Content-Type: application/json' -d '{
               "size": 1,
@@ -48,7 +48,7 @@
             }'
         , returnStdout=true})
                      getCompareBenchmarkIds.echo(Latest test-execution-id: test-id)
-                  getCompareBenchmarkIds.withSecrets({secrets=[{envVar=DATASTORE_USER, secretRef=op://opensearch-infra-secrets/benchmark-metrics/benchmark-metrics-datastore-user}, {envVar=DATASTORE_PASSWORD, secretRef=op://opensearch-infra-secrets/benchmark-metrics/benchmark-metrics-datastore-password}, {envVar=DATASTORE_ENDPOINT, secretRef=op://opensearch-infra-secrets/benchmark-metrics/benchmark-metrics-datastore-nlb-endpoint}]}, groovy.lang.Closure)
+                  getCompareBenchmarkIds.withSecrets({secrets=[{envVar=DATASTORE_USER, secretRef=op://opensearch-release-secrets/benchmark-metrics/benchmark-metrics-datastore-user}, {envVar=DATASTORE_PASSWORD, secretRef=op://opensearch-release-secrets/benchmark-metrics/benchmark-metrics-datastore-password}, {envVar=DATASTORE_ENDPOINT, secretRef=op://opensearch-release-secrets/benchmark-metrics/benchmark-metrics-datastore-nlb-endpoint}]}, groovy.lang.Closure)
                      getCompareBenchmarkIds.sh({script=
               curl -X POST "https://DATASTORE_ENDPOINT/benchmark-results-*/_search" -ku DATASTORE_USER:DATASTORE_PASSWORD -H 'Content-Type: application/json' -d '{
               "size": 1,

@@ -35,7 +35,7 @@ void call(Map args = [:]) {
     """
 
     def secret_rubygems_token = [
-        [envVar: 'API_KEY', secretRef: "op://opensearch-infra-secrets/rubygems/${args.apiKeyCredentialId}"]
+        [envVar: 'API_KEY', secretRef: "op://opensearch-release-secrets/rubygems/${args.apiKeyCredentialId}"]
     ]
 
     withSecrets(secrets: secret_rubygems_token){
